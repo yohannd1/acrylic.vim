@@ -6,18 +6,18 @@ let b:current_syntax = "acrylic"
 setlocal foldmethod=syntax
 setlocal indentexpr=indent(v:lnum) " dummy indent
 
-" Keywords and stuff {{{
-syn match acrSymbol /\v\@(fold|end)@!/ nextgroup=acrSymbol
-syn match acrSymbol_Inner /\v(\w+)/ contained
+" Symbols, tags and builtins {{{
+syn match acrSymbol /\v\@(fold|end)@!(\w+)/ nextgroup=acrSymbol
+syn match acrTag /\v\%(\w+)/
 
 let s:builtins = ["set", "get", "ref"]
 for builtin_name in s:builtins
   exec 'syn match acrBuiltin /\v\@' .. builtin_name .. '>/'
 endfor
 
-let s:builtins = ["-fold", "-id"]
+let s:builtins = ["fold", "id"]
 for builtin_name in s:builtins
-  exec 'syn match acrBuiltin /\v\%' .. builtin_name .. '>/'
+  exec 'syn match acrBuiltin /\v\%-' .. builtin_name .. '>/'
 endfor
 " }}}
 
@@ -46,10 +46,10 @@ syn region acrFoldTag fold transparent
 " }}}
 
 hi link acrSymbol Function
-hi link acrSymbol_Inner Function
 hi link acrComment Comment
 hi link acrBuiltin Keyword
 hi link acrHeaderOption Function
+hi link acrTag Function
 
 hi def link acrTaskDone Comment
 
