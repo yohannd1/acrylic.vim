@@ -12,13 +12,12 @@ I was thinking of a name and the word came to mind. It works as an
 analogy where this format is acrylic and others - such as Markdown, Org
 and LaTeX - are glass.
 
-Glass is usually a more robust material, but it's usually more expensive
-and heavier. Acrylic is less resistant to scratches, UV and germs, but
-it's light and cheap.
+Glass is usually more robust, but it can also be heavier and more
+expensive. In contrast, Acrylic is less resistant to scratches, UV rays
+and germs, but it's light and cheap.
 
 It's a really bad analogy. But the name's nice. Sorry.
 
 > _[...] while acrylic has a small upfront cost, in the long run, it
-> could cost just as much or more than glass._
-
-(https://www.fgdglass.com/blog/acrylic-vs-glass/)
+> could cost just as much or more than glass._<br>
+> https://www.fgdglass.com/blog/acrylic-vs-glass/
