@@ -1,10 +1,14 @@
 # acrylic.nvim
 
-A little notes format I made for myself, modeled mostly after Markdown,
-Org, and LaTeX.
+A little notetaking/task format I made for myself, modeled mostly after
+Markdown, Org, and LaTeX.
 
 Currently compatible with vim (I think?), but I might move this into
 neovim-only in the future.
+
+## Example
+
+See [doc/acrylic-example.acr](doc/acrylic-example.acr)
 
 ## Why "acrylic"?
 
