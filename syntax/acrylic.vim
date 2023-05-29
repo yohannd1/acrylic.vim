@@ -7,7 +7,7 @@ setlocal foldmethod=syntax
 setlocal indentexpr=indent(v:lnum) " dummy indent
 
 " Symbols, tags and builtins {{{
-syn match acrSymbol /\v\@(fold|end)@!(\w+)/ nextgroup=acrSymbol
+syn match acrSymbol /\v\@(\w+)/ nextgroup=acrSymbol
 syn match acrTag /\v\%(\w+)/
 
 let s:builtins = ["set", "get", "ref"]
@@ -41,14 +41,19 @@ syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`|$)/
 syn region acrInlineBold start=/\*/ skip=/\\\*/ end=/\v(\*|$)/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/_/ skip=/\\_/ end=/\v(_|$)/
+syn region acrInlineItalic start=/\<_/ skip=/\\_/ end=/\v(_\>|$)/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/
 
 " }}}
 
-" Folding + @fold/@end {{{
+" @code block {{{
+syn region acrCodeBlock matchgroup=acrBuiltin
+      \ start='\v^\@code>\ze(.*):(\s*)$' end='\v^\@end>'
+" }}}
+
+" Folding + @fold block {{{
 " This one is reponsible for @fold foldings and also the highlighting of
 " @fold and @end as builtins, because I couldn't get it to do it in any
 " other way
@@ -64,6 +69,7 @@ syn region acrFoldTag fold transparent
 hi def link acrSpecialChar SpecialChar
 hi def link acrEscapedBackquote acrSpecialChar
 
+hi def link acrCodeBlock String
 hi def link acrInlineCode String
 hi def link acrInlineBold Bold
 hi def link acrInlineItalic Italic
