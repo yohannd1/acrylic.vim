@@ -1,4 +1,4 @@
-" vim: sw=2 et
+" vim: sw=2 et foldenable
 
 if exists("b:current_syntax") | finish | endif
 let b:current_syntax = "acrylic"
@@ -32,6 +32,22 @@ syn match acrHeaderOption /\v^\s*\%:(\w+)/
 
 syn region acrComment start=/%%/ end=/$/
 
+" Inline regions {{{
+" The usual, adapted from VimWiki - code, bold and italic.
+
+syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`|$)/
+      \ contains=acrSpecialChar
+
+syn region acrInlineBold start=/\*/ skip=/\\\*/ end=/\v(\*|$)/
+      \ contains=acrSpecialChar,acrInlineItalic
+
+syn region acrInlineItalic start=/_/ skip=/\\_/ end=/\v(_|$)/
+      \ contains=acrSpecialChar,acrInlineBold
+
+syn match acrSpecialChar /\v\\[*_`\\]/
+
+" }}}
+
 " Folding + @fold/@end {{{
 " This one is reponsible for @fold foldings and also the highlighting of
 " @fold and @end as builtins, because I couldn't get it to do it in any
@@ -45,12 +61,17 @@ syn region acrFoldTag fold transparent
       \ start="\v\%-fold" end="\ze\%(\s*\n\)\+\%(\z1\s\)\@!."
 " }}}
 
-hi link acrSymbol Function
-hi link acrComment Comment
-hi link acrBuiltin Keyword
-hi link acrHeaderOption Function
-hi link acrTag Function
+hi def link acrSpecialChar SpecialChar
+hi def link acrEscapedBackquote acrSpecialChar
 
+hi def link acrInlineCode String
+hi def link acrInlineBold Bold
+hi def link acrInlineItalic Italic
+hi def link acrSymbol Function
+hi def link acrComment Comment
+hi def link acrBuiltin Keyword
+hi def link acrHeaderOption Function
+hi def link acrTag Function
 hi def link acrTaskDone Comment
 
 let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:]'
