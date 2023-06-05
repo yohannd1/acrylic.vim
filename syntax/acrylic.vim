@@ -10,7 +10,7 @@ setlocal indentexpr=indent(v:lnum) " dummy indent
 syn match acrSymbol /\v\@(\w+)/ nextgroup=acrSymbol
 syn match acrTag /\v\%(\w+)/
 
-let s:builtins = ["set", "get", "ref"]
+let s:builtins = ["set", "get"]
 for builtin_name in s:builtins
   exec 'syn match acrBuiltin /\v\@' .. builtin_name .. '>/'
 endfor
@@ -38,10 +38,10 @@ syn region acrComment start=/%%/ end=/$/
 syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`|$)/
       \ contains=acrSpecialChar
 
-syn region acrInlineBold start=/\*/ skip=/\\\*/ end=/\v(\*|$)/
+syn region acrInlineBold start=/\v\*\w/ skip=/\\\*/ end=/\v(\w\*|$)/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/\<_/ skip=/\\_/ end=/\v(_\>|$)/
+syn region acrInlineItalic start=/\v<_\w/ skip=/\\_/ end=/\v(\w_>|$)/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/
@@ -66,6 +66,19 @@ syn region acrFoldTag fold transparent
       \ start="\v\%-fold" end="\ze\%(\s*\n\)\+\%(\z1\s\)\@!."
 " }}}
 
+" Refs {{{
+
+syn region acrRef matchgroup=acrRefDelimiter contains=acrRefTitle
+      \ start='\v\@ref>\(.*\)\(' end='\v($|\))'
+syn match acrRefTitle /\v[^)]*/ contained
+
+syn region acrOldRef matchgroup=acrOldRefDelimiter contains=acrOldRefTitle
+      \ start='\v^\[\[.*\|' end='\v($|\]\])'
+
+syn match acrOldRefTitle /\v[^\]]*/ contained
+
+" }}}
+
 hi def link acrSpecialChar SpecialChar
 hi def link acrEscapedBackquote acrSpecialChar
 
@@ -79,9 +92,16 @@ hi def link acrBuiltin Keyword
 hi def link acrHeaderOption Function
 hi def link acrTag Function
 hi def link acrTaskDone Comment
+hi def link acrUrl Function
+
+hi def link acrRefDelimiter Comment
+hi def link acrRefTitle Bold
+
+hi def link acrOldRefDelimiter acrRefDelimiter
+hi def link acrOldRefTitle acrRefTitle
 
 let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:]'
+call matchadd("acrUrl", '\vhttps?://(' . s:URL_CHARS_MATCH . ')+')
+
 let s:VIMW_URL_REGEX = '\v\[\[(' . s:URL_CHARS_MATCH . '+)(\|.*)?\]\]'
 call matchadd("acrDeprecatedRef", s:VIMW_URL_REGEX)
-
-hi link acrDeprecatedRef Function
