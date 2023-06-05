@@ -68,14 +68,19 @@ syn region acrFoldTag fold transparent
 
 " Refs {{{
 
-syn region acrRef matchgroup=acrRefDelimiter contains=acrRefTitle
+syn region acrRefNoTitle matchgroup=acrRefDelimiter contains=acrRefInner
+      \ start='\v\@ref>\(' end='\v($|\))'
+
+syn region acrRef matchgroup=acrRefDelimiter contains=acrRefInner
       \ start='\v\@ref>\(.*\)\(' end='\v($|\))'
-syn match acrRefTitle /\v[^)]*/ contained
+syn match acrRefInner /\v[^)]*/ contained
 
-syn region acrOldRef matchgroup=acrOldRefDelimiter contains=acrOldRefTitle
-      \ start='\v^\[\[.*\|' end='\v($|\]\])'
+syn region acrOldRefNoTitle matchgroup=acrOldRefDelimiter contains=acrOldRefInner
+      \ start='\v\[\[' end='\v($|\]\])'
 
-syn match acrOldRefTitle /\v[^\]]*/ contained
+syn region acrOldRef matchgroup=acrOldRefDelimiter contains=acrOldRefInner
+      \ start='\v\[\[.*\|' end='\v($|\]\])'
+syn match acrOldRefInner /\v[^\]]*/ contained
 
 " }}}
 
@@ -95,10 +100,9 @@ hi def link acrTaskDone Comment
 hi def link acrUrl Function
 
 hi def link acrRefDelimiter Comment
-hi def link acrRefTitle Bold
-
+hi def link acrRefInner Bold
 hi def link acrOldRefDelimiter acrRefDelimiter
-hi def link acrOldRefTitle acrRefTitle
+hi def link acrOldRefInner acrRefInner
 
 let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:]'
 call matchadd("acrUrl", '\vhttps?://(' . s:URL_CHARS_MATCH . ')+')
