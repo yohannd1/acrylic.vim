@@ -50,7 +50,7 @@ syn match acrSpecialChar /\v\\[*_`\\]/
 
 " @code block {{{
 syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^\@code>\ze(.*):(\s*)$' end='\v^\@end>'
+      \ start='\v^(\s*)\@code>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
 " }}}
 
 " Folding + @fold block {{{
@@ -58,7 +58,7 @@ syn region acrCodeBlock matchgroup=acrBuiltin
 " @fold and @end as builtins, because I couldn't get it to do it in any
 " other way
 syn region acrFoldSym matchgroup=acrBuiltin fold transparent
-      \ start='\v^\@fold>\ze(.*):(\s*)$' end='\v^\@end>'
+      \ start='\v^(\s*)\@fold>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
 
 " I'm not fully sure what this means
 " Origin: https://www.vim.org/scripts/script.php?script_id=2462
