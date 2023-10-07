@@ -43,8 +43,10 @@ function! acrylic#open_cword()
             exec 'edit ' .. l:result . ".wiki"
         elseif filereadable(l:result . ".acr")
             exec 'edit ' .. l:result . ".acr"
-        else
+        elseif filereadable(l:result)
             exec 'edit ' .. l:result
+        else
+            exec 'edit ' .. l:result . ".acr"
         endif
     endif
 endfunction
