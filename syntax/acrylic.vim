@@ -8,11 +8,13 @@ setlocal indentexpr=indent(v:lnum) " dummy indent
 
 " Symbols, tags and builtins {{{
 syn match acrSymbol /\v\@(\w+)/ nextgroup=acrSymbol
+syn match acrSymbol /\v\\(\w+)/ nextgroup=acrSymbol
 syn match acrTag /\v\%(\w+)/
 
 let s:builtins = ["set", "get"]
 for builtin_name in s:builtins
   exec 'syn match acrBuiltin /\v\@' .. builtin_name .. '>/'
+  exec 'syn match acrBuiltin /\v\\' .. builtin_name .. '>/'
 endfor
 
 let s:builtins = ["fold", "id"]
@@ -50,6 +52,8 @@ syn match acrSpecialChar /\v\\[*_`\\]/
 
 " @code block {{{
 syn region acrCodeBlock matchgroup=acrBuiltin
+      \ start='\v^(\s*)\\code>\ze(.*):(\s*)$' end='\v^(\s*)\\end>'
+syn region acrCodeBlock matchgroup=acrBuiltin
       \ start='\v^(\s*)\@code>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
 " }}}
 
@@ -57,6 +61,8 @@ syn region acrCodeBlock matchgroup=acrBuiltin
 " This one is reponsible for @fold foldings and also the highlighting of
 " @fold and @end as builtins, because I couldn't get it to do it in any
 " other way
+syn region acrFoldSym matchgroup=acrBuiltin fold transparent
+      \ start='\v^(\s*)\\fold>\ze(.*):(\s*)$' end='\v^(\s*)\\end>'
 syn region acrFoldSym matchgroup=acrBuiltin fold transparent
       \ start='\v^(\s*)\@fold>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
 
