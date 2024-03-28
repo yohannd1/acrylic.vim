@@ -40,10 +40,10 @@ syn region acrComment start=/%%/ end=/$/
 syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`|$)/
       \ contains=acrSpecialChar
 
-syn region acrInlineBold start=/\v\*\w/ skip=/\\\*/ end=/\v(\w\*|$)/
+syn region acrInlineBold start=/\c\v\*[0-9a-zÀ-ÿ]/ skip=/\\\*/ end=/\c\v([0-9a-zÀ-ÿ]\*|$)/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/\v<_\w/ skip=/\\_/ end=/\v(\w_>|$)/
+syn region acrInlineItalic start=/\c\v<_[0-9a-zÀ-ÿ]/ skip=/\\_/ end=/\c\v([0-9a-zÀ-ÿ]_>|$)/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/
