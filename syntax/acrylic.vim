@@ -7,20 +7,20 @@ setlocal foldmethod=syntax
 setlocal indentexpr=indent(v:lnum) " dummy indent
 
 " Symbols, tags and builtins {{{
-syn match acrSymbol /\v\@(\w+)/ nextgroup=acrSymbol
-syn match acrSymbol /\v\\(\w+)/ nextgroup=acrSymbol
+
+syn match acrMacro /\v\@(\w+)/ nextgroup=acrMacro
 syn match acrTag /\v\%(\w+)/
 
 let s:builtins = ["set", "get"]
 for builtin_name in s:builtins
   exec 'syn match acrBuiltin /\v\@' .. builtin_name .. '>/'
-  exec 'syn match acrBuiltin /\v\\' .. builtin_name .. '>/'
 endfor
 
 let s:builtins = ["fold", "id"]
 for builtin_name in s:builtins
   exec 'syn match acrBuiltin /\v\%-' .. builtin_name .. '>/'
 endfor
+
 " }}}
 
 " Tasks {{{
@@ -34,16 +34,42 @@ syn match acrHeaderOption /\v^\s*\%:(\w+)/
 
 syn region acrComment start=/%%/ end=/$/
 
-" Inline regions {{{
-" The usual, adapted from VimWiki - code, bold and italic.
+" Math {{{
+"
+" Note(yohannd1): I tortured myself to make this work. Had to study the
+" code in the official rust syntax plugin and it turns out that the
+" ORDER of the goddamn OPTIONS matter. Had to put start/end after
+" matchgroup... or something. Still don't get why.
 
-syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`|$)/
+syn region acrMathInline
+      \ matchgroup=acrMathInline
+      \ start=/${/ skip=/\\}/ end=/}/
+      \ contains=acrMathMacro,acrMathNested
+
+syn region acrMathNested
+      \ matchgroup=acrMathInline
+      \ start=/{/ skip=/\\}/ end=/}/
+      \ contains=acrMathMacro,acrMathNested contained transparent
+
+syn region acrMathToEnd
+      \ start=/\v(\${1,2}:)/ end=/\v($)/
+      \ contains=acrMathMacro,acrMathNested
+
+syn match acrMathMacro /\v\\(\w+)/ contained
+
+" }}}
+
+" Inline regions {{{
+"
+" Initially adapted from VimWiki
+
+syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`)/
       \ contains=acrSpecialChar
 
-syn region acrInlineBold start=/\c\v\*[0-9a-zÀ-ÿ]/ skip=/\\\*/ end=/\c\v([0-9a-zÀ-ÿ]\*|$)/
+syn region acrInlineBold start=/\c\v\*[0-9a-zÀ-ÿ]/ skip=/\\\*/ end=/\c\v([0-9a-zÀ-ÿ]\*)/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/\c\v<_[0-9a-zÀ-ÿ]/ skip=/\\_/ end=/\c\v([0-9a-zÀ-ÿ]_>|$)/
+syn region acrInlineItalic start=/\c\v<_[0-9a-zÀ-ÿ]/ skip=/\\_/ end=/\c\v([0-9a-zÀ-ÿ]_>)/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/
@@ -95,9 +121,12 @@ hi def link acrEscapedBackquote acrSpecialChar
 
 hi def link acrCodeBlock String
 hi def link acrInlineCode String
+
+hi def link acrMathMacro Function
+
 hi def link acrInlineBold Bold
 hi def link acrInlineItalic Italic
-hi def link acrSymbol Function
+hi def link acrMacro Function
 hi def link acrComment Comment
 hi def link acrBuiltin Keyword
 hi def link acrHeaderOption Function
@@ -110,7 +139,7 @@ hi def link acrRefInner Bold
 hi def link acrOldRefDelimiter acrRefDelimiter
 hi def link acrOldRefInner acrRefInner
 
-let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:]'
+let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:()]'
 call matchadd("acrUrl", '\vhttps?://(' . s:URL_CHARS_MATCH . ')+')
 
 let s:VIMW_URL_REGEX = '\v\[\[(' . s:URL_CHARS_MATCH . '+)(\|.*)?\]\]'
