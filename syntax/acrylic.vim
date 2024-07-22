@@ -43,7 +43,7 @@ syn region acrComment start=/%%/ end=/$/
 
 syn region acrMathInline
       \ matchgroup=acrMathInline
-      \ start=/${/ skip=/\\}/ end=/}/
+      \ start=/\v(\${1,2}\{)/ skip=/\\}/ end=/}/
       \ contains=acrMathMacro,acrMathNested
 
 syn region acrMathNested
@@ -55,7 +55,7 @@ syn region acrMathToEnd
       \ start=/\v(\${1,2}:)/ end=/\v($)/
       \ contains=acrMathMacro,acrMathNested
 
-syn match acrMathMacro /\v\\(\w+)/ contained
+syn match acrMathMacro /\v\\(\w+|.)/ contained
 
 " }}}
 
@@ -66,10 +66,10 @@ syn match acrMathMacro /\v\\(\w+)/ contained
 syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`)/
       \ contains=acrSpecialChar
 
-syn region acrInlineBold start=/\c\v\*[0-9a-zÀ-ÿ]/ skip=/\\\*/ end=/\c\v([0-9a-zÀ-ÿ]\*)/
+syn region acrInlineBold start=/\c\v(^|\s)\*/ skip=/\\\*/ end=/\c\v\*/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/\c\v<_[0-9a-zÀ-ÿ]/ skip=/\\_/ end=/\c\v([0-9a-zÀ-ÿ]_>)/
+syn region acrInlineItalic start=/\c\v(^|\s)_/ skip=/\\_/ end=/\c\v_/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/
@@ -117,7 +117,6 @@ syn match acrOldRefInner /\v[^\]]*/ contained
 " }}}
 
 hi def link acrSpecialChar SpecialChar
-hi def link acrEscapedBackquote acrSpecialChar
 
 hi def link acrCodeBlock String
 hi def link acrInlineCode String
