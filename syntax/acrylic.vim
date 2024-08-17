@@ -66,10 +66,10 @@ syn match acrMathMacro /\v\\(\w+|.)/ contained
 syn region acrInlineCode start=/`/ skip=/\\`/ end=/\v(`)/
       \ contains=acrSpecialChar
 
-syn region acrInlineBold start=/\c\v(^|\s)\*/ skip=/\\\*/ end=/\c\v\*/
+syn region acrInlineBold start=/\c\v(^|\s)\*[^ \t]/ skip=/\\\*/ end=/\c\v\*/
       \ contains=acrSpecialChar,acrInlineItalic
 
-syn region acrInlineItalic start=/\c\v(^|\s)_/ skip=/\\_/ end=/\c\v_/
+syn region acrInlineItalic start=/\c\v(^|\s)_[^ \t]/ skip=/\\_/ end=/\c\v_/
       \ contains=acrSpecialChar,acrInlineBold
 
 syn match acrSpecialChar /\v\\[*_`\\]/

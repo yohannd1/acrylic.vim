@@ -1,10 +1,11 @@
-# acrylic.nvim
+# acrylic.vim
 
 A little notetaking/task format I made for myself, modeled mostly after
-Markdown, Org, and LaTeX.
+Markdown, Org-mode, and LaTeX. Its main difference is the focus on
+indentation and line spacing to separate items.
 
-Currently compatible with vim (I think?), but I might move this into
-neovim-only in the future.
+At the moment it is compatible with Vim, I believe. But that might
+change in the future.
 
 ## Example
 
@@ -23,5 +24,6 @@ and germs, but it's light and cheap.
 It's a really bad analogy. But the name's nice. Sorry.
 
 > _[...] while acrylic has a small upfront cost, in the long run, it
-> could cost just as much or more than glass._<br>
+> could cost just as much or more than glass._
+>
 > https://www.fgdglass.com/blog/acrylic-vs-glass/

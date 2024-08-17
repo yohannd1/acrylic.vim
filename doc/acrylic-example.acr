@@ -12,18 +12,26 @@ This is a new paragraph.
   Paragraphs can have sub-paragraphs as well.
   Indentation is set via the `%:indent` tag (values such as `spaces 2`, `spaces 4` or `tabs`)
     The default value is `spaces 2`
-    %% TODO: actually support this lmao
-    %% TODO: is detecting indentation viable?
 
 This is another multi-line paragraph.
 The next indented nodes are children not of this line, but of the entire paragraph.
   Hello! I am a child.
 
-There are no native headings (though support can be added later with `@h1()`-`@h6()`)
+%% This is a comment, like shown earlier.
+
+At the moment there is no heading support.
+
+Tasks can be added:
+  ( ) This is a pending task.
+  (x) This is a finished task.
+  (-) This is a cancelled task.
+
+They can also be represented by square-brackets:
+  [ ] This is a pending task.
+  [x] This is a finished task.
+  [-] This is a cancelled task.
 
 TODO: bullet items
-TODO: todo lists
-TODO: credits (markdown, vimwiki, org, latex, racket)
 TODO: folding with `%-fold` and `@fold`
 TODO: italic, bold, inline code
 TODO: code blocks
@@ -32,3 +40,4 @@ TODO: tags `%tag(val)`
 TODO: parent-referring tags `%:tag val`
 TODO: blocks in general `@sym(arg1)(arg2):`
 TODO: builtin symbols: `@code`, `@ref`, `@set`, `@get`
+TODO: heading support? something like `@h1()` to `@h6()`
