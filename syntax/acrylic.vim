@@ -116,6 +116,9 @@ syn match acrOldRefInner /\v[^\]]*/ contained
 
 " }}}
 
+" Urls
+syn match acrUrl /\v(^|\s)[a-zA-Z]+:\/\/[^ \t]*/
+
 hi def link acrSpecialChar SpecialChar
 
 hi def link acrCodeBlock String
@@ -137,9 +140,3 @@ hi def link acrRefDelimiter Comment
 hi def link acrRefInner Bold
 hi def link acrOldRefDelimiter acrRefDelimiter
 hi def link acrOldRefInner acrRefInner
-
-let s:URL_CHARS_MATCH = '[a-zA-Z0-9/\-\.%_?#=&+~:()]'
-call matchadd("acrUrl", '\vhttps?://(' . s:URL_CHARS_MATCH . ')+')
-
-let s:VIMW_URL_REGEX = '\v\[\[(' . s:URL_CHARS_MATCH . '+)(\|.*)?\]\]'
-call matchadd("acrDeprecatedRef", s:VIMW_URL_REGEX)
