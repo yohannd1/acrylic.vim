@@ -8,8 +8,8 @@ setlocal indentexpr=indent(v:lnum) " dummy indent
 
 " Symbols, tags and builtins {{{
 
-syn match acrMacro /\v\@(\w+)/ nextgroup=acrMacro
-syn match acrTag /\v\%(\w+)/
+syn match acrMacro /\v(^|\s)\@(\w+)/
+syn match acrTag /\v(^|\s)\%(\w+)/
 
 let s:builtins = ["set", "get"]
 for builtin_name in s:builtins
@@ -81,6 +81,15 @@ syn region acrCodeBlock matchgroup=acrBuiltin
       \ start='\v^(\s*)\\code>\ze(.*):(\s*)$' end='\v^(\s*)\\end>'
 syn region acrCodeBlock matchgroup=acrBuiltin
       \ start='\v^(\s*)\@code>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
+
+" TODO: somehow know how many of these are needed to close it,
+" dynamically
+syn region acrCodeBlock matchgroup=acrBuiltin
+      \ start='\v^(\s*)\@code>(.*)#\{(\s*)$' end='\v^(\s*)\}'
+syn region acrCodeBlock matchgroup=acrBuiltin
+      \ start='\v^(\s*)\@code>(.*)#\{{2}(\s*)$' end='\v^(\s*)\}{2}'
+syn region acrCodeBlock matchgroup=acrBuiltin
+      \ start='\v^(\s*)\@code>(.*)#\{{3}(\s*)$' end='\v^(\s*)\}{3}'
 " }}}
 
 " Folding + @fold block {{{
@@ -101,10 +110,10 @@ syn region acrFoldTag fold transparent
 " Refs {{{
 
 syn region acrRefNoTitle matchgroup=acrRefDelimiter contains=acrRefInner
-      \ start='\v\@ref>\(' end='\v($|\))'
+      \ start='\v(^|\s)\@ref>\(' end='\v($|\))'
 
 syn region acrRef matchgroup=acrRefDelimiter contains=acrRefInner
-      \ start='\v\@ref>\(.*\)\(' end='\v($|\))'
+      \ start='\v(^|\s)\@ref>\([^)]*\)\(' end='\v($|\))'
 syn match acrRefInner /\v[^)]*/ contained
 
 syn region acrOldRefNoTitle matchgroup=acrOldRefDelimiter contains=acrOldRefInner
