@@ -55,7 +55,7 @@ syn region acrMathToEnd
       \ start=/\v(\${1,2}:)/ end=/\v($)/
       \ contains=acrMathMacro,acrMathNested
 
-syn match acrMathMacro /\v\\(\w+|.)/ contained
+syn match acrMathMacro /\v\\([a-zA-Z]+|.)/ contained
 
 " }}}
 
