@@ -76,22 +76,8 @@ syn match acrSpecialChar /\v\\[*_`\\]/
 
 " }}}
 
-" @code block {{{
-
-" FIXME: this is deprecated - remove it
-syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^(\s*)\\code>\ze(.*):(\s*)$' end='\v^(\s*)\\end>'
-syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^(\s*)\@code>\ze(.*):(\s*)$' end='\v^(\s*)\@end>'
-
-" FIXME: this is deprecated - remove it
-syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^(\s*)\@code>(.*)#\{(\s*)$' end='\v^(\s*)\}'
-syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^(\s*)\@code>(.*)#\{{2}(\s*)$' end='\v^(\s*)\}{2}'
-syn region acrCodeBlock matchgroup=acrBuiltin
-      \ start='\v^(\s*)\@code>(.*)#\{{3}(\s*)$' end='\v^(\s*)\}{3}'
-
+" CODE BLOCK
+"
 " TODO: somehow know how many of these are needed to close it,
 " dynamically, so we don't need to define all of these
 let s:i = 1
@@ -99,8 +85,6 @@ while s:i <= 12
   execute printf("syn region acrRawBlock matchgroup=acrBuiltin start='\\v#{%d}\\{' end='\\v\\}#{%d}'", s:i, s:i)
   let s:i += 1
 endwhile
-
-" }}}
 
 " Folding + @fold block {{{
 " This one is reponsible for @fold foldings and also the highlighting of
@@ -140,7 +124,6 @@ syn match acrUrl /\v(^|\s)[a-zA-Z]+:\/\/[^ \t]*/
 
 hi def link acrSpecialChar SpecialChar
 
-hi def link acrCodeBlock String
 hi def link acrInlineCode String
 
 hi def link acrRawBlock String
