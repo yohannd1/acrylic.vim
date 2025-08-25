@@ -110,13 +110,6 @@ syn region acrRef matchgroup=acrRefDelimiter contains=acrRefInner
       \ start='\v(^|\s)\@ref>\([^)]*\)\(' end='\v($|\))'
 syn match acrRefInner /\v[^)]*/ contained
 
-syn region acrOldRefNoTitle matchgroup=acrOldRefDelimiter contains=acrOldRefInner
-      \ start='\v\[\[' end='\v($|\]\])'
-
-syn region acrOldRef matchgroup=acrOldRefDelimiter contains=acrOldRefInner
-      \ start='\v\[\[.*\|' end='\v($|\]\])'
-syn match acrOldRefInner /\v[^\]]*/ contained
-
 " }}}
 
 " Urls
@@ -142,5 +135,3 @@ hi def link acrUrl Function
 
 hi def link acrRefDelimiter Comment
 hi def link acrRefInner Bold
-hi def link acrOldRefDelimiter acrRefDelimiter
-hi def link acrOldRefInner acrRefInner
